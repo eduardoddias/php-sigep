@@ -28,23 +28,23 @@ class SoapClientFactory
         if (!self::$_soapClient) {
             $wsdl = Bootstrap::getConfig()->getWsdlAtendeCliente();
 
-            $opts = array(
-                'ssl' => array(
-                    'ciphers'           =>'RC4-SHA', 
-                    'verify_peer'       =>false, 
-                    'verify_peer_name'  =>false
-                )
-            );
+            $opts = [
+                'http'=> [
+                    'protocol_version'=>'1.0',
+                    'header' => 'Connection: Close'
+                ]
+            ];
+
             // SOAP 1.1 client
             $params = array (
-                'encoding'              => self::WEB_SERVICE_CHARSET, 
-                'verifypeer'            => false, 
-                'verifyhost'            => false, 
-                'soap_version'          => SOAP_1_1, 
+                'encoding'              => self::WEB_SERVICE_CHARSET,
+                'verifypeer'            => false,
+                'verifyhost'            => false,
+                'soap_version'          => SOAP_1_1,
                 'trace'                 => Bootstrap::getConfig()->getEnv() != Config::ENV_PRODUCTION,
-                'exceptions'            => Bootstrap::getConfig()->getEnv() != Config::ENV_PRODUCTION, 
-                "connection_timeout"    => 180, 
-                'stream_context'        => stream_context_create($opts) 
+                'exceptions'            => Bootstrap::getConfig()->getEnv() != Config::ENV_PRODUCTION,
+                "connection_timeout"    => 180,
+                'stream_context'        => stream_context_create($opts)
             );
 
             self::$_soapClient = new \SoapClient($wsdl, $params);
@@ -79,7 +79,7 @@ class SoapClientFactory
         $to     = 'UTF-8';
         $from   = self::WEB_SERVICE_CHARSET;
         $str = false;
-        
+
         if (function_exists('iconv')) {
             $str = iconv($from, $to . '//TRANSLIT', $string);
         } elseif (function_exists('mb_convert_encoding')) {
