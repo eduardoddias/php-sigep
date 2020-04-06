@@ -108,26 +108,26 @@ class CalcPrecoPrazo
         
         $result = new Result();
         try {
-            $r = SoapClientFactory::getSoapCalcPrecoPrazo()->calcPrecoPrazo($soapArgs);
+            $r = SoapClientFactory::getSoapCalcPrecoPrazo($soapArgs);//->calcPrecoPrazo($soapArgs);
         } catch (\Exception $e) {
             $message = $e->getMessage();
-            if ($message == 'Service Unavailable') {
-                if (!self::$calcPrecosPrazosServiceUnavailable) {
-                    //Tenta mais uma vez
-                    self::$calcPrecosPrazosServiceUnavailable = true;
-                    sleep(1);
-
-                    return $this->calcPrecoPrazo($params);
-                }
-            }
-            if ($e instanceof \SoapFault) {
-                $result->setIsSoapFault(true);
-                $result->setErrorCode($e->getCode());
-                $result->setErrorMsg(SoapClientFactory::convertEncoding($e->getMessage()));
-            } else {
-                $result->setErrorCode($e->getCode());
-                $result->setErrorMsg($e->getMessage());
-            }
+//            if ($message == 'Service Unavailable') {
+//                if (!self::$calcPrecosPrazosServiceUnavailable) {
+//                    //Tenta mais uma vez
+//                    self::$calcPrecosPrazosServiceUnavailable = true;
+//                    sleep(1);
+//
+//                    return $this->calcPrecoPrazo($params);
+//                }
+//            }
+//            if ($e instanceof \SoapFault) {
+//                $result->setIsSoapFault(true);
+//                $result->setErrorCode($e->getCode());
+//                $result->setErrorMsg(SoapClientFactory::convertEncoding($e->getMessage()));
+//            } else {
+//                $result->setErrorCode($e->getCode());
+//                $result->setErrorMsg($e->getMessage());
+//            }
         }
 
 //        if (class_exists('\StaLib_Logger')) {

@@ -32,14 +32,22 @@ class ConsultaCep
         } else if ($r instanceof \stdClass) {
              if (property_exists($r, 'return') && $r->return instanceof \stdClass) {
                 $consultaCepResposta = new ConsultaCepResposta();
-                $consultaCepResposta->setBairro(SoapClientFactory::convertEncoding($r->return->bairro));
-                $consultaCepResposta->setCep($r->return->cep);
-                $consultaCepResposta->setCidade(SoapClientFactory::convertEncoding($r->return->cidade));
-                $consultaCepResposta->setComplemento1(SoapClientFactory::convertEncoding($r->return->complemento));
-                $consultaCepResposta->setComplemento2(SoapClientFactory::convertEncoding($r->return->complemento2));
-                $consultaCepResposta->setEndereco(SoapClientFactory::convertEncoding($r->return->end));
-                $consultaCepResposta->setId($r->return->id);
-                $consultaCepResposta->setUf($r->return->uf);
+                if(isset($r->return->bairro))
+                    $consultaCepResposta->setBairro(SoapClientFactory::convertEncoding($r->return->bairro));
+                if(isset($r->return->cep))
+                    $consultaCepResposta->setCep($r->return->cep);
+                if(isset($r->return->cidade))
+                    $consultaCepResposta->setCidade(SoapClientFactory::convertEncoding($r->return->cidade));
+                if(isset($r->return->complemento))
+                    $consultaCepResposta->setComplemento1(SoapClientFactory::convertEncoding($r->return->complemento));
+                if(isset($r->return->complemento2))
+                    $consultaCepResposta->setComplemento2(SoapClientFactory::convertEncoding($r->return->complemento2));
+                if(isset($r->return->end))
+                    $consultaCepResposta->setEndereco(SoapClientFactory::convertEncoding($r->return->end));
+                if(isset($r->return->id))
+                    $consultaCepResposta->setId($r->return->id);
+                if(isset($r->return->uf))
+                    $consultaCepResposta->setUf($r->return->uf);
                 $result->setResult($consultaCepResposta);
              } else {
                  $errorCode = 0;
